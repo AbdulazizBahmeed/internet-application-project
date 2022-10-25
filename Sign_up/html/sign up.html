@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign up - bakkah</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <img src="logobg.png" alt="logo" />
+      </header>
+      <form id="form">
+        <h2>Sign up</h2>
+        <div class="half-input">
+          <input
+            type="text"
+            name="first-name"
+            placeholder="First name"
+            maxlength="15"
+            autofocus
+            required
+          />
+          <input
+            type="text"
+            name="last-name"
+            placeholder="Last name"
+            maxlength="15"
+            required
+          />
+        </div>
+        <div class="full-input">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            maxlength="15"
+            required
+          />
+        </div>
+
+        <div class="full-input">
+          <input type="email" name="email" placeholder="Email" required />
+        </div>
+        <div class="full-input">
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          maxlength="15"
+          required
+        />
+      </div>
+      <div class="full-input">
+        <input
+          type="password"
+          name="password"
+          placeholder="Confirm password"
+          maxlength="15"
+          required
+        />
+      </div>
+        <div class="question">
+          <h5>Already had an account? <a href="#">Log in</a></h5>
+        </div>
+        <input type="submit" name="button" class="submit" value="Sign up" />
+      </form>
+    </main>
+    <aside>
+      <h1>In the purist place.</h1>
+    </aside>
+  </body>
+</html>
