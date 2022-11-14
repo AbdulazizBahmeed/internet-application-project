@@ -70,6 +70,11 @@ app.post("/sign-up", (req, res) => {
   res.sendFile(path.join(__dirname, "public/pages/signUp.html"));
 });
 
+
+
+
+
+
 function handleDisconnect() {
   connection = mysql.createConnection(db_config); // Recreate the connection, since
   // the old one cannot be reused.
