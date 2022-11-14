@@ -536,7 +536,7 @@ input:focus.wrong {
 .full-input {
   position: relative;
 }
-.full-input span {
+.full-input .sign-hint {
   content: "";
   position: absolute;
   padding: 0.5rem;
@@ -551,11 +551,11 @@ input:focus.wrong {
   border-radius: 15px;
   visibility: hidden;
   opacity: 0;
-  transition: 0.2s ease-in;
+  transition: 0.3s ease-in;
   z-index: -1;
 }
 
-.full-input span::before{
+.full-input .sign-hint::before{
   content: "";
   position: absolute;
   left: 50%;
@@ -564,10 +564,26 @@ input:focus.wrong {
   border: 15px solid;
   border-color: #403a32 transparent transparent;
 }
- .sign-input:focus + span {
+ .sign-input:focus + .hint {
   opacity: 1;
   bottom: 135%;
   visibility: visible;
   z-index: 1;
   transition: 0.4s
+}
+
+.sign-hint.err-msg {
+  opacity: 1;
+  bottom: 135%;
+  visibility: visible;
+  z-index: 1;
+}
+
+#err-msg{
+  transition-duration: 1s;
+}
+
+.disabled{
+  background-color: lightgray;
+  cursor: pointer;
 }

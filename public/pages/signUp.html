@@ -15,7 +15,13 @@
           ><img class="sign-img" src="../images/logobg.png" alt="logo"
         /></a>
       </header>
-      <form method="post" action="/sign-up" class="sign-form" id="form" autocomplete="off">
+      <form
+        method="POST"
+        action="/sign-up"
+        class="sign-form"
+        id="form"
+        autocomplete="off"
+      >
         <h2 class="h2">Sign up</h2>
         <div class="full-input">
           <input
@@ -27,10 +33,11 @@
             maxlength="15"
             required
           />
-          <span>should be between 3 to 15 characters<br>
-            should only contain english letters<br>
-            can containt numbers <br>
-            can't contian special charaters!<br>
+          <span class="sign-hint hint"
+            >should be between 3 to 15 characters<br />
+            should only contain english letters<br />
+            can containt numbers <br />
+            can't contian special charaters!<br />
           </span>
         </div>
 
@@ -43,6 +50,9 @@
             placeholder="Email"
             required
           />
+          <span class="sign-hint" id="err-msg"
+            >A user is already registered with this e-mail address.
+          </span>
         </div>
         <div class="full-input">
           <input
@@ -54,12 +64,14 @@
             maxlength="15"
             required
           />
-          <span>should be between 8 to 15 characters<br>
-            should only contain english letters<br>
-            at least one capital character<br>
-            at least one small character<br>
-            at least one number <br>
-            can not contian special charaters</span>
+          <span class="sign-hint hint"
+            >should be between 8 to 15 characters<br />
+            should only contain english letters<br />
+            at least one capital character<br />
+            at least one small character<br />
+            at least one number <br />
+            can not contian special charaters</span
+          >
         </div>
         <div class="full-input">
           <input
@@ -75,7 +87,12 @@
         <div class="question">
           <h5>Already had an account? <a href="/login">Log in</a></h5>
         </div>
-        <input id="sign-btn" type="submit" class="sign-submit" value="Sign up" />
+        <input
+          id="sign-btn"
+          type="submit"
+          class="sign-submit"
+          value="Sign up"
+        />
       </form>
     </main>
     <aside>

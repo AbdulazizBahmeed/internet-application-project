@@ -5,6 +5,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const mysql = require("mysql");
 const { strict } = require("assert");
+const { nextTick } = require("process");
 const db_config = {
   host: "bys5wwtnkth0revav7bf-mysql.services.clever-cloud.com",
   database: "bys5wwtnkth0revav7bf",
@@ -22,6 +23,7 @@ app.listen(port, () => {
 });
 
 //middlewares
+app.set("trust proxy", 1);
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,14 +36,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.cookie("sid", req.session.id, {
-    path: "/",
-    maxAge: 1000 *30, //ms
-    httpOnly: true,
-    secure: true,
-    sameSite:"strict",
-  });
+app.get("/",isAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "public/pages/homePage.html"));
 });
 
@@ -65,15 +60,35 @@ app.get("/sign-up", (req, res) => {
   res.sendFile(path.join(__dirname, "public/pages/signUp.html"));
 });
 
-app.post("/sign-up", (req, res) => {
-  console.log(req.body);
-  res.sendFile(path.join(__dirname, "public/pages/signUp.html"));
-});
+app.post("/sign-Up", signUp);
 
+function isAuth(req,res,next){
+  console.log(req.cookies.cart);
+  next();
+}
 
+function signUp(req, res) {
+  const session = req.session.id;
+  const user = req.body;
+  const date = new Date();
+  const expireDate =
+    date.getFullYear() +
+    "-" +
+    date.getUTCMonth() +
+    "-" +
+    (date.getUTCDate() + 1);
+    const day = 1000 * 60 * 5;
 
-
-
+  // const query = `INSERT INTO users VALUES (${user.username},${user.email},${user.password},"user",${session},${fullExpire});`;
+  const query = `INSERT INTO users VALUES ("${user.username}","${user.email}","${user.password}","user","${session}","${expireDate}");`;
+  connection.query(query, (error, results) => {
+    if (error) res.sendStatus(500);
+    else {
+      res.cookie('sid', session, { httpOnly:true, secure:true, maxAge: fiveMin })
+      res.sendStatus(200);
+    }
+  });
+}
 
 function handleDisconnect() {
   connection = mysql.createConnection(db_config); // Recreate the connection, since
