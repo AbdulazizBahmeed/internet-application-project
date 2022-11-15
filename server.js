@@ -74,7 +74,7 @@ function getInfo(req, res, next) {
     const query = `select * from users where sessionID = "${session}" and sessionIDExpires > NOW();`;
     connection.query(query, (error, results) => {
       if (error || results.length < 1) {
-        res.clearCookie("sid");
+        res.clearCookie("ajs_anonymous_id");
         req.logged = false;
         next();
       } else {
@@ -85,7 +85,7 @@ function getInfo(req, res, next) {
     });
   } else {
     console.log("here");
-    res.clearCookie("sid");
+    res.clearCookie("ajs_anonymous_id");
     req.logged = false;
     next();
   }
@@ -97,7 +97,7 @@ function isAuth(req, res, next) {
     const query = `select * from users where sessionID = "${session}" and sessionIDExpires > NOW();`;
     connection.query(query, (error, results) => {
       if (error || results.length < 1) {
-        res.clearCookie("sid");
+        res.clearCookie("ajs_anonymous_id");
         res.redirect("/login");
       } else if (
         results[0].privilege !== "admin" &&
@@ -105,7 +105,7 @@ function isAuth(req, res, next) {
       ) {
         res.redirect("/");
       } else if (req.path === "/login" || req.path === "/sign-up") {
-        res.clearCookie("sid");
+        res.clearCookie("ajs_anonymous_id");
         res.redirect("/login");
       } else {
         req.logged = true;
@@ -138,7 +138,7 @@ function login(req, res) {
           console.log(error);
           res.sendStatus(505);
         } else {
-          res.cookie("sid", session, {
+          res.cookie("ajs_anonymous_id", session, {
             httpOnly: true,
             secure: true,
             maxAge: fiveMin,
@@ -162,7 +162,7 @@ function signUp(req, res) {
       console.log(error);
       res.sendStatus(505);
     } else {
-      res.cookie("sid", session, {
+      res.cookie("ajs_anonymous_id", session, {
         httpOnly: true,
         secure: true,
         maxAge: fiveMin,
