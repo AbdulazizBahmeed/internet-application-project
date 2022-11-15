@@ -115,7 +115,7 @@ async function login(e) {
       this.classList.remove("disabled");
       setTimeout(() => {
         errMSg.classList.remove("err-msg");
-      }, 5000);
+      }, 3000);
     }
   }
 }

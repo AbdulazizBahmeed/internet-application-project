@@ -84,6 +84,7 @@ function getInfo(req, res, next) {
       }
     });
   } else {
+    console.log("here");
     res.clearCookie("sid");
     req.logged = false;
     next();
@@ -123,12 +124,12 @@ function login(req, res) {
   const session = req.session.id;
   const user = req.body;
   const expirationDate = getExpireDate();
-  const fiveMin = 1000 * 60 * 10;
+  const fiveMin = 1000 * 60 * 5;
   const query = `select * from users where email = "${user.email}" and password = "${user.password}";`;
   const updateQuery = `update users set sessionIDExpires = "${expirationDate}", sessionID = "${session}" where email = "${user.email}";`;
 
   connection.query(query, (error, results) => {
-    if (error) {
+    if (error || results.length < 1) {
       console.log(error);
       res.sendStatus(505);
     } else {

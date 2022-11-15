@@ -14,7 +14,7 @@
         <li class="here">
           <a href="/apartments">Apartments</a>
         </li>
-        <% if(user.privilege === "admin"){ %>
+        <% if(logged && user.privilege === "admin"){ %>
           <li>
             <a href="/add-apartment">Add Apartments</a>
           </li>
