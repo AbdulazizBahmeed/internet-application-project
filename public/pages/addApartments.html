@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add Apartments - bakkah</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <header>
+    <a href="/"><h2 class="log-text">bakkah</h2></a>
+    <nav>
+      <ul class="nav__links">
+        <li><a href="/">Home</a></li>
+        <li>
+          <a href="/apartments">Apartments</a>
+        </li>
+        <li class="here">
+          <a href="/add-apartment">Add Apartments</a>
+        </li>
+        <li><a href="/feedback">Add Feedback</a></li>
+      </ul>
+    </nav>
+    <a class="login" href="/login"><button>Login</button></a>
+  </header>
+  <body>
+    <main class="Add-apartments-container">
+      <h1 class="feedback-desc">Add a new apartment to be bidded</h1>
+      <form class="add-form">
+        <input
+          class="add-input"
+          type="text"
+          name="info"
+          id="info-input"
+          placeholder="Info about the apartment"
+          maxlength="30"
+          required
+        />
+        <input
+          class="add-input"
+          type="number"
+          name="size"
+          id="size-input"
+          placeholder="The size in square meter"
+          required
+        />
+        <input
+          class="add-input"
+          type="number"
+          name="price"
+          id="price-input"
+          placeholder="The initial bid price"
+          required
+        />
+        <input
+          class="add-input"
+          type="file"
+          name="photo"
+          id="photo-input"
+          placeholder="photo of the apartmetn"
+          accept="image/*"
+          required
+        />
+        <button class="feedback-submit" type="submit">submit</button>
+      </form>
+    </main>
+    <div class="footer">bakkah .est 2022 All rights reserved.</div>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browse Apartments - bakkah</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <header>
+    <a href="/"><h2 class="log-text">bakkah</h2></a>
+    <nav>
+      <ul class="nav__links">
+        <li><a href="/">Home</a></li>
+        <li class="here">
+          <a href="/apartments">Apartments</a>
+        </li>
+        <li>
+          <a href="/add-apartment">Add Apartments</a>
+        </li>
+        <li><a href="/feedback">Add Feedback</a></li>
+      </ul>
+    </nav>
+    <a class="login" href="/login"><button>Login</button></a>
+  </header>
+  <body>
+    <main class="browse-container">
+      <div class="apartment">
+        <div class="apartment-info">
+          <div>
+            <div class="label">info about the aprartment:</div>
+            <div class="detail">studio aprartment.</div>
+          </div>
+          <div>
+            <div class="label">size:</div>
+            <div class="detail">10 square meter.</div>
+          </div>
+          <div>
+            <div class="label">last bid price:</div>
+            <div class="detail money">500,000RS</div>
+          </div>
+          <div class="bid-container">
+            <input
+              class="bid-input"
+              type="number"
+              name="bid"
+              id="bid-price"
+              min="500000"
+              value="500000"
+            />
+            <button class="bid-btn">bid</button>
+          </div>
+        </div>
+        <div class="apartment-img-container">
+          <img class="apartment-img" src="../images/studio.jpg" alt="" />
+        </div>
+      </div>
+      <div class="apartment">
+        <div class="apartment-info">
+          <div>
+            <div class="label">info about the aprartment:</div>
+            <div class="detail">two bedrooms aprartment.</div>
+          </div>
+          <div>
+            <div class="label">size:</div>
+            <div class="detail">15 square meter.</div>
+          </div>
+          <div>
+            <div class="label">last bid price:</div>
+            <div class="detail money">800,000RS</div>
+          </div>
+          <div class="bid-container">
+            <input
+              class="bid-input"
+              type="number"
+              name="bid"
+              id="bid-price"
+              min="800000"
+              value="800000"
+            />
+            <button class="bid-btn">bid</button>
+          </div>
+        </div>
+        <div class="apartment-img-container">
+          <img class="apartment-img" src="../images/two rooms.jpg" alt="" />
+        </div>
+      </div>
+      <div class="apartment">
+        <div class="apartment-info">
+          <div>
+            <div class="label">info about the aprartment:</div>
+            <div class="detail">two floors studio.</div>
+          </div>
+          <div>
+            <div class="label">size:</div>
+            <div class="detail">18 square meter.</div>
+          </div>
+          <div>
+            <div class="label">last bid price:</div>
+            <div class="detail money">1.000,000RS</div>
+          </div>
+          <div class="bid-container">
+            <input
+              class="bid-input"
+              type="number"
+              name="bid"
+              id="bid-price"
+              min="1000000"
+              value="1000000"
+            />
+            <button class="bid-btn">bid</button>
+          </div>
+        </div>
+        <div class="apartment-img-container">
+          <img class="apartment-img" src="../images/two floors.jpg" alt="" />
+        </div>
+      </div>
+    </main>
+    <div class="footer">bakkah .est 2022 All rights reserved.</div>
+  </body>
+</html>

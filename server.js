@@ -183,7 +183,7 @@ function getExpireDate() {
   const expireTime =
     date.getUTCHours() +
     ":" +
-    (date.getUTCMinutes() + 5) +
+    ((date.getUTCMinutes() + 5)% 60) +
     ":" +
     date.getUTCSeconds();
   const fullExpire = expireDate + " " + expireTime;
