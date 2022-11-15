@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add Feedback - bakkah</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+  </head>
+  <header>
+    <a href="/"><h2 class="log-text">bakkah</h2></a>
+    <nav>
+      <ul class="nav__links">
+        <li><a href="/">Home</a></li>
+        <li>
+          <a href="/apartments">Apartments</a>
+        </li>
+        <% if(logged && user.privilege === "admin"){ %>
+          <li>
+            <a href="/add-apartment">Add Apartments</a>
+          </li>
+          <% } %>
+          <li class="here"><a href="/feedback">Add Feedback</a></li>
+      </ul>
+    </nav>
+    <a class="login" href="/login"
+      ><button>
+        <% if(logged){ %> Sign Out <br />
+        (<%=user.username %>) <% } else{ %> Login <% } %>
+      </button></a
+    >
+  </header>
+  <body>
+    <main class="form-container">
+      <h1 class="feedback-desc">Add Feedback</h1>
+      <form class="feedback-form">
+        <textarea
+          placeholder="Your opinion matters to us! Please write your thoughts here."
+          required
+          autofocus
+        ></textarea>
+        <br />
+        <input
+          type="submit"
+          name="submit"
+          value="Submit"
+          class="feedback-submit"
+        />
+      </form>
+    </main>
+    <div class="footer">bakkah .est 2022 All rights reserved.</div>
+  </body>
+</html>

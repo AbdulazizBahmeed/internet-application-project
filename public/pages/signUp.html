@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign up - bakkah</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="../scripts/script.js" defer></script>
+  </head>
+
+  <body class="sign-body">
+    <main class="sign-main">
+      <header class="sign-header">
+        <a href="/"
+          ><img class="sign-img" src="../images/logobg.png" alt="logo"
+        /></a>
+      </header>
+      <form
+        method="POST"
+        action="/sign-up"
+        class="sign-form"
+        id="form"
+        autocomplete="off"
+      >
+        <h2 class="h2">Sign up</h2>
+        <div class="full-input">
+          <input
+            id="username"
+            class="sign-input"
+            type="text"
+            name="username"
+            placeholder="Username"
+            maxlength="15"
+            required
+          />
+          <span class="sign-hint hint"
+            >should be between 3 to 15 characters<br />
+            should only contain english letters<br />
+            can containt numbers <br />
+            can't contian special charaters!<br />
+          </span>
+        </div>
+
+        <div class="full-input">
+          <input
+            id="email"
+            class="sign-input"
+            type="email"
+            name="email"
+            maxlength="20"
+            placeholder="Email"
+            required
+          />
+          <span class="sign-hint" id="err-msg"
+            >A user is already registered with this e-mail address.
+          </span>
+        </div>
+        <div class="full-input">
+          <input
+            id="password"
+            class="sign-input"
+            type="password"
+            name="password"
+            placeholder="Password"
+            maxlength="15"
+            required
+          />
+          <span class="sign-hint hint"
+            >should be between 8 to 15 characters<br />
+            should only contain english letters<br />
+            at least one capital character<br />
+            at least one small character<br />
+            at least one number <br />
+            can not contian special charaters</span
+          >
+        </div>
+        <div class="full-input">
+          <input
+            id="confirm-password"
+            class="sign-input"
+            type="password"
+            name="confirmPass"
+            placeholder="Confirm password"
+            maxlength="15"
+            required
+          />
+        </div>
+        <div class="question">
+          <h5>Already had an account? <a href="/login">Log in</a></h5>
+        </div>
+        <input
+          id="sign-btn"
+          type="submit"
+          class="sign-submit"
+          value="Sign up"
+        />
+      </form>
+    </main>
+    <aside>
+      <h1>In the purist place.</h1>
+    </aside>
+  </body>
+</html>
