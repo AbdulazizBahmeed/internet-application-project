@@ -84,6 +84,9 @@ button {
 button:hover {
   background-color: rgba(64, 58, 50, 0.8);
 }
+.here {
+  border-bottom: 2px white solid;
+}
 
 /* END OF NAV BAR STYLING */
 
@@ -367,6 +370,9 @@ textarea {
   height: 10%;
 }
 
+.full-input.login{
+  height: 15%;
+}
 .full-input input {
   width: 100%;
   height: 85%;
@@ -580,7 +586,10 @@ input:focus.wrong {
 }
 
 #err-msg{
-  transition-duration: 1s;
+  transition-duration: 0.5s;
+  color: red;
+  text-align: center;
+
 }
 
 .disabled{

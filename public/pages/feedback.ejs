@@ -14,13 +14,20 @@
         <li>
           <a href="/apartments">Apartments</a>
         </li>
-        <li>
-          <a href="/add-apartment">Add Apartments</a>
-        </li>
-        <li><a href="/feedback">Add Feedback</a></li>
+        <% if(user.privilege === "admin"){ %>
+          <li>
+            <a href="/add-apartment">Add Apartments</a>
+          </li>
+          <% } %>
+          <li class="here"><a href="/feedback">Add Feedback</a></li>
       </ul>
     </nav>
-    <a class="login" href="/login"><button>Login</button></a>
+    <a class="login" href="/login"
+      ><button>
+        <% if(logged){ %> Sign Out <br />
+        (<%=user.username %>) <% } else{ %> Login <% } %>
+      </button></a
+    >
   </header>
   <body>
     <main class="form-container">

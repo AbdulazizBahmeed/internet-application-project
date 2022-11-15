@@ -7,20 +7,27 @@
     <link rel="stylesheet" href="../styles/style.css" />
   </head>
   <header>
-    <a href="/"><h2 class="log-text">bakkah</h2></a> 
+    <a href="/"><h2 class="log-text">bakkah</h2></a>
     <nav>
       <ul class="nav__links">
         <li><a href="/">Home</a></li>
-        <li>
+        <li class="here">
           <a href="/apartments">Apartments</a>
         </li>
-        <li>
-          <a href="/add-apartment">Add Apartments</a>
-        </li>
+        <% if(user.privilege === "admin"){ %>
+          <li>
+            <a href="/add-apartment">Add Apartments</a>
+          </li>
+          <% } %>
         <li><a href="/feedback">Add Feedback</a></li>
       </ul>
     </nav>
-    <a class="login" href="/login"><button>Login</button></a>
+    <a class="login" href="/login"
+      ><button>
+        <% if(logged){ %> Sign Out <br />
+        (<%=user.username %>) <% } else{ %> Login <% } %>
+      </button></a
+    >
   </header>
   <body>
     <main class="browse-container">
@@ -40,7 +47,7 @@
           </div>
           <div class="bid-container">
             <input
-            class="bid-input"
+              class="bid-input"
               type="number"
               name="bid"
               id="bid-price"
@@ -51,11 +58,7 @@
           </div>
         </div>
         <div class="apartment-img-container">
-          <img
-            class="apartment-img"
-            src="../images/studio.jpg"
-            alt=""
-          />
+          <img class="apartment-img" src="../images/studio.jpg" alt="" />
         </div>
       </div>
       <div class="apartment">
@@ -74,7 +77,7 @@
           </div>
           <div class="bid-container">
             <input
-            class="bid-input"
+              class="bid-input"
               type="number"
               name="bid"
               id="bid-price"
@@ -85,11 +88,7 @@
           </div>
         </div>
         <div class="apartment-img-container">
-          <img
-            class="apartment-img"
-            src="../images/two rooms.jpg"
-            alt=""
-          />
+          <img class="apartment-img" src="../images/two rooms.jpg" alt="" />
         </div>
       </div>
       <div class="apartment">
@@ -108,7 +107,7 @@
           </div>
           <div class="bid-container">
             <input
-            class="bid-input"
+              class="bid-input"
               type="number"
               name="bid"
               id="bid-price"
@@ -119,11 +118,7 @@
           </div>
         </div>
         <div class="apartment-img-container">
-          <img
-            class="apartment-img"
-            src="../images/two floors.jpg"
-            alt=""
-          />
+          <img class="apartment-img" src="../images/two floors.jpg" alt="" />
         </div>
       </div>
     </main>

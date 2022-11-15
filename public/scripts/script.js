@@ -1,15 +1,18 @@
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
+const loginPassword = document.getElementById("login-password");
 const confirmPass = document.getElementById("confirm-password");
 const signBtn = document.getElementById("sign-btn");
 const errMSg = document.getElementById("err-msg");
+const logBtn = document.getElementById("log-btn");
 
 if (username) username.addEventListener("input", checkName);
 if (email) email.addEventListener("input", checkEmail);
 if (password) password.addEventListener("input", checkPassStrength);
 if (confirmPass) confirmPass.addEventListener("input", checkConfirmPass);
-if (signBtn) signBtn.addEventListener("clicl", signUp);
+if (signBtn) signBtn.addEventListener("click", signUp);
+if (logBtn) logBtn.addEventListener("click", login);
 
 function checkName() {
   let nameRegx = "^([a-zA-z0-9]){3,15}$";
@@ -54,7 +57,7 @@ function checkConfirmPass() {
   }
 }
 
-signBtn.addEventListener("click", signUp);
+if (signBtn) signBtn.addEventListener("click", signUp);
 
 async function signUp(e) {
   e.preventDefault();
@@ -75,6 +78,37 @@ async function signUp(e) {
 
     if (res.ok) {
       window.location = "/";
+      this.disabled = false;
+    } else {
+      errMSg.classList.add("err-msg");
+      this.disabled = false;
+      this.classList.remove("disabled");
+      setTimeout(() => {
+        errMSg.classList.remove("err-msg");
+      }, 5000);
+    }
+  }
+}
+
+async function login(e) {
+  e.preventDefault();
+  if (checkEmail) {
+    this.disabled = true;
+    this.classList.add("disabled");
+    const data = {};
+    data.email = email.value;
+    data.password = loginPassword.value;
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      window.location = "/";
+      this.disabled = false;
     } else {
       errMSg.classList.add("err-msg");
       this.disabled = false;

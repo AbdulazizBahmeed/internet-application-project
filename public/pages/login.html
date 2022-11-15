@@ -5,28 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login - bakkah</title>
     <link rel="stylesheet" href="../styles/style.css" />
+    <script src="../scripts/script.js" defer></script>
   </head>
 
   <body class="sign-body">
     <main class="sign-main">
       <header class="sign-header">
-        <a href="/"><img src="../images/logobg.png" alt="logo" /></a>  
+        <a href="/"><img src="../images/logobg.png" alt="logo" /></a>
       </header>
       <form class="log-form" id="form" autocomplete="off">
         <h2 class="h2">Login</h2>
         <br />
+        <div class="full-input login">
         <input
-        class="log-input"
-          type="text"
-          name="username"
-          placeholder="Username"
-          maxlength="15"
+          id="email"
+          class="sign-input"
+          type="email"
+          name="email"
+          placeholder="email"
+          maxlength="20"
           autofocus
           required
         />
-        <br />
+        <span class="sign-hint" id="err-msg"
+            >wrong email/password please try again
+          </span>
+        </div>
         <input
-        class="log-input"
+          id="login-password"
+          class="log-input"
           type="password"
           name="password"
           placeholder="Password"
@@ -35,15 +42,21 @@
         />
         <br />
         <div class="question">
-          <h5 >Don't have an account? <a href="/Sign-up">Sign up</a></h5>
+          <h5>Don't have an account? <a href="/sign-up">Sign up</a></h5>
         </div>
-        
+
         <br />
-        <input type="submit" name="button" class="sign-submit" value="Login" />
+        <input
+          id="log-btn"
+          type="submit"
+          name="button"
+          class="sign-submit"
+          value="Login"
+        />
       </form>
     </main>
     <aside>
-      <h1 >In the purist place.</h1>
+      <h1>In the purist place.</h1>
     </aside>
   </body>
 </html>

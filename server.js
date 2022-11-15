@@ -3,9 +3,12 @@ const app = express();
 const path = require("path");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const ejs = require("ejs");
 const mysql = require("mysql");
 const { strict } = require("assert");
 const { nextTick } = require("process");
+const { runInNewContext } = require("vm");
+const { getCipherInfo } = require("crypto");
 const db_config = {
   host: "bys5wwtnkth0revav7bf-mysql.services.clever-cloud.com",
   database: "bys5wwtnkth0revav7bf",
@@ -17,13 +20,15 @@ const db_config = {
 let connection;
 handleDisconnect();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 7000;
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`);
 });
 
 //middlewares
 app.set("trust proxy", 1);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "public/pages/"));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,59 +40,153 @@ app.use(
     saveUninitialized: false,
   })
 );
-
-app.get("/",isAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "public/pages/homePage.html"));
+app.get("/", getInfo, (req, res) => {
+  res.render("homePage", { user: req.user, logged: req.logged });
 });
 
-app.get("/apartments", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/pages/browseApartments.html"));
+app.get("/apartments", isAuth, (req, res) => {
+  res.render("browseApartments", { user: req.user, logged: req.logged });
 });
 
-app.get("/add-apartment", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/pages/addApartments.html"));
+app.get("/add-apartment", isAuth, (req, res) => {
+  res.render("addApartments", { user: req.user, logged: req.logged });
 });
 
-app.get("/feedback", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/pages/feedback.html"));
+app.get("/feedback", getInfo, (req, res) => {
+  res.render("feedback", { user: req.user, logged: req.logged });
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", isAuth, (req, res) => {
   res.sendFile(path.join(__dirname, "public/pages/login.html"));
 });
 
-app.get("/sign-up", (req, res) => {
+app.post("/login", login);
+
+app.get("/sign-up", isAuth, function sign(req, res) {
   res.sendFile(path.join(__dirname, "public/pages/signUp.html"));
 });
 
 app.post("/sign-Up", signUp);
 
-function isAuth(req,res,next){
-  console.log(req.cookies.cart);
-  next();
+function getInfo(req, res, next) {
+  const session = req.cookies.sid;
+  if (session) {
+    const query = `select * from users where sessionID = "${session}" and sessionIDExpires > NOW();`;
+    connection.query(query, (error, results) => {
+      if (error || results.length < 1) {
+        res.clearCookie("sid");
+        req.logged = false;
+        next();
+      } else {
+        req.logged = true;
+        req.user = results[0];
+        next();
+      }
+    });
+  } else {
+    res.clearCookie("sid");
+    req.logged = false;
+    next();
+  }
+}
+
+function isAuth(req, res, next) {
+  const session = req.cookies.sid;
+  if (session) {
+    const query = `select * from users where sessionID = "${session}" and sessionIDExpires > NOW();`;
+    connection.query(query, (error, results) => {
+      if (error || results.length < 1) {
+        res.clearCookie("sid");
+        res.redirect("/login");
+      } else if (
+        results[0].privilege !== "admin" &&
+        req.path === "/add-apartment"
+      ) {
+        res.redirect("/");
+      } else if (req.path === "/login" || req.path === "/sign-up") {
+        res.clearCookie("sid");
+        res.redirect("/login");
+      } else {
+        req.logged = true;
+        req.user = results[0];
+        next();
+      }
+    });
+  } else if (req.path === "/login" || req.path === "/sign-up") {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+}
+
+function login(req, res) {
+  const session = req.session.id;
+  const user = req.body;
+  const expirationDate = getExpireDate();
+  const fiveMin = 1000 * 60 * 10;
+  const query = `select * from users where email = "${user.email}" and password = "${user.password}";`;
+  const updateQuery = `update users set sessionIDExpires = "${expirationDate}", sessionID = "${session}" where email = "${user.email}";`;
+
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.log(error);
+      res.sendStatus(505);
+    } else {
+      connection.query(updateQuery, (error, results) => {
+        if (error) {
+          console.log(error);
+          res.sendStatus(505);
+        } else {
+          res.cookie("sid", session, {
+            httpOnly: true,
+            secure: true,
+            maxAge: fiveMin,
+          });
+          res.sendStatus(200);
+        }
+      });
+    }
+  });
 }
 
 function signUp(req, res) {
   const session = req.session.id;
   const user = req.body;
+  const expirationDate = getExpireDate();
+  const fiveMin = 1000 * 60 * 5;
+  const query = `INSERT INTO users VALUES ("${user.username}","${user.email}","${user.password}","user","${session}","${expirationDate}");`;
+
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.log(error);
+      res.sendStatus(505);
+    } else {
+      res.cookie("sid", session, {
+        httpOnly: true,
+        secure: true,
+        maxAge: fiveMin,
+      });
+      res.sendStatus(200);
+    }
+  });
+}
+
+function getExpireDate() {
   const date = new Date();
   const expireDate =
     date.getFullYear() +
     "-" +
-    date.getUTCMonth() +
+    (date.getUTCMonth() + 1) +
     "-" +
-    (date.getUTCDate() + 1);
-    const day = 1000 * 60 * 5;
-
-  // const query = `INSERT INTO users VALUES (${user.username},${user.email},${user.password},"user",${session},${fullExpire});`;
-  const query = `INSERT INTO users VALUES ("${user.username}","${user.email}","${user.password}","user","${session}","${expireDate}");`;
-  connection.query(query, (error, results) => {
-    if (error) res.sendStatus(500);
-    else {
-      res.cookie('sid', session, { httpOnly:true, secure:true, maxAge: fiveMin })
-      res.sendStatus(200);
-    }
-  });
+    date.getUTCDate();
+  const expireTime =
+    date.getUTCHours() +
+    ":" +
+    (date.getUTCMinutes() + 5) +
+    ":" +
+    date.getUTCSeconds();
+  const fullExpire = expireDate + " " + expireTime;
+  return fullExpire;
 }
 
 function handleDisconnect() {
